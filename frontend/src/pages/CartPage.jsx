@@ -9,7 +9,7 @@ export default function CartPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, loading } = useSelector((s) => s.cart);
-
+ 
   const subtotal = items?.reduce((acc, i) => acc + i.price * i.quantity, 0) || 0;
   const shipping = subtotal >= 499 ? 0 : 49;
   const tax = Math.round(subtotal * 0.18 * 100) / 100;
