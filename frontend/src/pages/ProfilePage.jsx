@@ -14,7 +14,7 @@ export default function ProfilePage() {
 
   const handleSave = async () => {
     setLoading(true);
-    try {
+    try { 
       await API.put('/auth/profile', { name });
       await dispatch(fetchProfile());
       setEditing(false);
