@@ -6,7 +6,7 @@ import { formatPrice } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 const INITIAL_ADDRESS = { fullName: '', phone: '', addressLine1: '', addressLine2: '', city: '', state: '', pincode: '' };
-
+ 
 export default function CheckoutPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
