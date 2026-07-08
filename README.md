@@ -273,3 +273,27 @@ statusHistory[], deliveredAt, createdAt
 - To change the admin email: update `ADMIN_EMAIL` in `.env` and restart the server
 - The old admin account stays in the database but loses admin access immediately
 - Run `npm run create-admin` again to seed the new email as admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+| 39 | Image Upload Integration                          | **Support product image uploads**          |
+
+
+
+
+
+
