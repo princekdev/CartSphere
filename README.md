@@ -71,9 +71,12 @@ cd frontend && npm run dev
 ```
 
 ### Step 5 — Login as admin
-1. Go to **http://localhost:5173/login**
+
+1. Go to **https://cart-sphere.vercel.app/login**
+
 2. Enter your `ADMIN_EMAIL` and `ADMIN_PASSWORD`
-3. You are automatically redirected to **http://localhost:5173/admin**
+
+3. You are automatically redirected to **https://cart-sphere.vercel.app/admin**
 
 ---
 
