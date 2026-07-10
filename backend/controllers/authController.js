@@ -25,24 +25,29 @@ const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // Block registration with the ADMIN_EMAIL — admin account is seeded separately
-    if (isAdminEmail(email)) {
-      return res.status(400).json({
-        success: false,
-        message: 'This email address is reserved. Please use a different email.'
-      });
-    }
+    const existing = await User.findOne({ email: email.toLowerCase() });
 
-    if (await User.findOne({ email: email.toLowerCase() })) {
+    if (existing) {
+      // Agar yeh ADMIN_EMAIL hai aur account pehle se ban chuka hai,
+      // to isko dobara register nahi hone dena — reserved rakho.
+      if (isAdminEmail(email)) {
+        return res.status(400).json({
+          success: false,
+          message: 'This email address is reserved. Please use a different email.'
+        });
+      }
       return res.status(400).json({ success: false, message: 'Email is already registered' });
     }
 
+    // ADMIN_EMAIL abhi tak DB me exist nahi karta — pehli baar isi register
+    // form se admin account create hone do. Iske baad upar wala "already
+    // registered" check isko dobara register hone se rok dega.
     const user = await User.create({ name, email: email.toLowerCase(), password });
     const token = generateToken(user._id);
 
     res.status(201).json({
       success: true,
-      message: 'Account created successfully',
+      message: isAdminEmail(email) ? 'Admin account created successfully' : 'Account created successfully',
       token,
       user: buildUserPayload(user)
     });
