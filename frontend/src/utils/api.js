@@ -16,11 +16,24 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    const status = err.response?.status;
+    const url = err.config?.url || '';
+
+    // Login/Register apne khud ke error already dikhate hain (authSlice ke
+    // rejectWithValue se). In requests par hard-redirect NAHI karna hai,
+    // warna wrong-password par bhi poora page reload ho jayega.
+    const isAuthAttempt = url.includes('/auth/login') || url.includes('/auth/register');
+
+    if (status === 401 && !isAuthAttempt) {
+      // Yeh sirf tab chalega jab ek already-logged-in user ka token
+      // expire/invalid ho gaya ho (kisi protected route par).
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      if (!window.location.pathname.startsWith('/login')) {
+        window.location.href = '/login';
+      }
     }
+
     return Promise.reject(err);
   }
 );
